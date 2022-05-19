@@ -7,6 +7,7 @@ const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [err, setErr] = useState(false);
 
   const sendRequest = async () => {
     const response = await axios
@@ -15,7 +16,10 @@ const Register = () => {
         email,
         password,
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        setErr(true);
+      });
     const data = await response.data;
     console.log(data);
   };
@@ -24,6 +28,11 @@ const Register = () => {
     e.preventDefault();
     sendRequest().then(() => history("/login"));
   };
+
+  const handleFocus = () => {
+    setErr(false);
+  };
+
   return (
     <div>
       <form onSubmit={registerUser}>
@@ -34,6 +43,7 @@ const Register = () => {
             type="text"
             placeholder="UserName"
             value={userName}
+            onFocus={handleFocus}
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
@@ -44,6 +54,7 @@ const Register = () => {
             type="password"
             placeholder="Password"
             value={password}
+            onFocus={handleFocus}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -54,9 +65,11 @@ const Register = () => {
             type="email"
             placeholder="email"
             value={email}
+            onFocus={handleFocus}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        {err && <p>User Already Exists Sir ! Please Try Again</p>}
         <input type="submit" value="Register" />
       </form>
     </div>
