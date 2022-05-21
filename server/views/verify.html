@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Verification</title>
+  </head>
+  <body>
+    <script>
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const error = urlParams.get("error");
+      const message = urlParams.get("message");
+      const Success = `
+        <h2> Email has been Verified Sir! Congratulation Sir You can login now! </h2>
+        <a href=${"http://localhost:3000/login"} > Login Here Sir </a>
+      `;
+      const Failure = `
+        ${message}<br>
+        <h2> Something went Wrong Sir! We are really Sorry for the Incovenience </h2>
+        <a href=${"http://locahost:3000/"}> Return to homepage Sir </a>
+      `;
+      const bodyContent = !error ? Success : Failure;
+      document.write(bodyContent);
+    </script>
+  </body>
+</html>

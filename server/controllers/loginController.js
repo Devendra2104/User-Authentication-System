@@ -18,6 +18,10 @@ const handleLogin = async (req, res) => {
       .status(401)
       .json({ message: "Sir Password didn't matched with our database User" });
   }
+  if (!foundUser.verified) {
+    res.json({ status: "Falied", message: "Email has been not verified Sir!" });
+    return;
+  }
   // give this user his accessToken
   const token = jwt.sign({ id: foundUser._id }, process.env.accessTokenSecret, {
     expiresIn: "30s",
